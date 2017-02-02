@@ -1,14 +1,14 @@
 extends layout
 
 block content
+  h1(class='header') Javascript games
   div(class='login')
-    h1(class='header') Sign in
-    div(class='content')
+    div
       form(class='form' action='/login', method='POST')
         input(type='text' name='username' placeholder='username')
         input(type='password' name='password' placeholder='password')
         button(type='submit') Sign in
-    a(href='/signup') Sign up
+        a(class='link' href='/signup') Sign up
     #message
     if message
       h1 #{message}
