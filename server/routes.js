@@ -28,7 +28,7 @@ module.exports = (passport) => {
     res.render('register', { message: req.flash('message') })
   })
 
-  router.get('/home', isAuthenticated, (res, req) => {
+  router.get('/home', isAuthenticated, (req, res) => {
     console.log('helloooooo?????')
     console.log(isAuthenticated)
     res.render('home', { user: req.user })

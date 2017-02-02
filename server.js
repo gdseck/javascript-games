@@ -26,12 +26,12 @@ app.use('/js', express.static('js'))
 const passport = require('passport')
 var session = require('express-session')
 
-app.use(session({secret: 'mySecretKey'}))
-app.use(passport.initialize())
-app.use(session())
-
 const initPassport = require('./server/passport/init')
 initPassport(passport)
+
+app.use(session({secret: 'mySecretKey'}))
+app.use(passport.initialize())
+app.use(passport.session())
 
 const flash = require('connect-flash')
 app.use(flash())
@@ -60,30 +60,3 @@ app.set('port', process.env.PORT || 3000)
 var server = app.listen(app.get('port'), () => {
   debug('Express server listening on port ' + server.address().port)
 })
-// app.post('/quotes', (req, res) => {
-//   Quotes.insert({
-//     name: req.body.name,
-//     quote: req.body.quote
-//   }, (err, result) => {
-//     if (err) return console.log(err)
-//
-//     console.log('saved to database')
-//     res.redirect('/')
-//   })
-// })
-//
-// app.get('/quotes', (req, res) => {
-//   Quotes.find({}, (err, data) => {
-//     if (err) console.log(err)
-//     console.log(data)
-//   })
-// })
-//
-// app.use('/styles', express.static(path.join(__dirname, '/styles')))
-//
-// mongoose.connect('mongodb://localhost/games', (err, database) => {
-//   if (err) return console.log(err)
-//   app.listen(8000, function () {
-//     console.log('Server running at http://127.0.0.1:8000/')
-//   })
-// })
