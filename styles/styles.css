@@ -5,90 +5,54 @@
 html {
   position: relative;
   height: 100vh;
-  background: gray;
+  background: #fff;
 }
 
 body {
-  background: green;
-  margin: 0;
   height: 100%;
   width: 100%;
-  font-family: Verdana, sans-serif;
+  margin: 0;
+  background: linear-gradient(#bd5028, #ff6128);
 }
 
-.title {
-  position: relative;
-  font-size: 2rem;
+.form {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.login {
+  height: 20rem;
+  max-width: 20rem;
   margin: 0 auto;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 1px solid #484141;
+  box-shadow: 1px 1px 1px rgba(0,0,0,0.8);
+  padding: 2rem;
+  background: #fff;
+  position: relative;
+}
+
+.header {
   width: 100%;
-  background: yellow;
+  position: relative;
   text-align: center;
-  height: 4rem;
-  line-height: 60px;
 }
 
-.quotes-section {
-  background: red;
-  position: relative;
-  width: 70%;
-  max-width: 55rem;
-  margin: auto;
-  padding: 2px;
-  margin-top: 1rem;
-}
+.content {
 
-.add-quote {
-  background: blue;
-  position: relative;
-  width: 70%;
-  margin: auto;
-  padding: 1rem;
-  margin-top: 2rem;
 }
 
 input {
+  height: 2rem;
+  margin: 0.2rem;
+  line-height: 2rem;
+  font-size: 14px;
   border: none;
-  line-height: 23px;
-  background: inherit;
-  border-bottom: 2px solid brown;
-  padding: 4px;
+  border-bottom: 1px solid #756262;
 }
 
-.navbar {
-  background: goldenrod;
-  position: fixed;
-  width: 100%;
-  height: 4rem;
-}
-
-.nav-wrapper {
-  position: relative;
-  height: 100%;
-  width: 70%;
-  max-width: 55rem;
-  margin: auto;
-  display: flex;
-  flex-flow: row nowrap;
-}
-
-.nav-item {
-  height: 100%;
-  background: aquamarine;
-  width: 5rem;
-  position: relative;
-  line-height: 4rem;
-  text-align: center;
-  flex: 0 1 auto;
-  text-decoration: none;
-  color: black;
-}
-
-.nav-item:hover {
-}
-
-.container {
-  position: relative;
-  height: calc(100% - 4em);
-  width: 100%;
-  top: 4em;
+input:focus {
+  outline: none;
+  border-bottom: 1px solid black;
 }

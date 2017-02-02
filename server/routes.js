@@ -45,7 +45,7 @@ module.exports = (passport) => {
     failureFlash: true
   }))
 
-  router.get('/simon-says', isAuthenticated, (res, req) => {
+  router.get('/simon-says', isAuthenticated, (req, res) => {
     res.render('simon-says')
   })
 
