@@ -3,8 +3,9 @@ extends layout
 block content
   div
     #user
-      h1 Welcome #{user.username}. Check your details below:
+      h1 Welcome to javascript games
         div
           ul
-            li Username ===> #{user.username}
+            li
+              a(href='/simon-says') Simon says
         a(href='/signout') Sign out

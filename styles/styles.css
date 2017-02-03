@@ -19,6 +19,64 @@ body {
   /*background: #1c1e20;*/
 }
 
+.navbar-wrapper {
+  height: 4rem;
+  position: fixed;
+  width: 100%;
+  /*background: linear-gradient(#000, #272525);*/
+  background: linear-gradient(to bottom, #2b2b29 0%, #3d3e3c 100%);
+  border-bottom: 2px solid #676565;
+}
+
+.nav-content {
+  height: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  margin: 0 3rem;
+  justify-content: space-between;
+}
+
+.nav-item-wrapper {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  width: 20rem;
+  height: 100%;
+}
+
+.brand {
+  color: #fff;
+  font-weight: 600;
+  font-variant: small-caps;
+  font-size: 24px;
+}
+
+.brand-wrapper {
+  border-bottom: 1px solid black;
+  height: 150%;
+  background: linear-gradient(to bottom, #2b2b29 0%, #3d3e3c 100%);
+  border-bottom-right-radius: 35%;
+  border-bottom-left-radius: 36%;
+  border-bottom-color: #676565;
+  border-bottom-width: 5px;
+  border-left: 2px solid #676565;
+  border-right: 2px solid #676565;
+}
+
+.searchField {
+  align-self: flex-end;
+  border-radius: 11px;
+  text-indent: 7px;
+  box-shadow: inset 0px -2px 0px 12px #423f3f;
+  border: 1px solid #8e7d7d;
+  line-height: 20px;
+  height: 20px;
+  color: #fff;
+}
+
+.nav-item
+
 .form {
   display: flex;
   flex-flow: column nowrap;
@@ -28,7 +86,7 @@ body {
   height: 20rem;
   max-width: 20rem;
   margin: 0 auto;
-  top: calc(50% - 5rem);
+  top: 50%;
   transform: translateY(-50%);
   border: none;
   box-shadow: none;
@@ -52,7 +110,7 @@ body {
 .content {
 }
 
-input {
+input.login-input {
   width: 100%;
   padding: 0px 16px;
   line-height: 2rem;
@@ -92,8 +150,11 @@ button {
   transition: background-color 500ms, border-color 500ms, opacity 500ms;
   vertical-align: bottom;
   white-space: nowrap;
-  width: auto;
+  width: 100%;
   margin-bottom: 24px;
+  left: 50%;
+  position: relative;
+  transform: translateX(-50%);
 }
 
 button:hover {
@@ -110,6 +171,7 @@ button:hover {
   font-size: 16px;
   width: 100%;
   text-align: center;
+  display: block;
 }
 
 .link:hover {

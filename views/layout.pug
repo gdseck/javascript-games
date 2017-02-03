@@ -5,5 +5,12 @@ html
     link(rel='stylesheet', href='/styles/styles.css')
     link(rel='stylesheet', href='/styles/simon-says.css')
   body
+    div(class='navbar-wrapper')
+      div(class='nav-content')
+        div(class='nav-item-wrapper')
+        div(class='nav-item-wrapper brand-wrapper')
+          div(class='brand') javascript games
+        div(class='nav-item-wrapper')
+          input(class='searchField', placeholder='find games...')
     block content
     script(type='text/javascript' src='/js/bundle.js')
