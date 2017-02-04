@@ -5,12 +5,14 @@ body, html {
 
 .container {
   background: #86818e;
-  width: 500px;
-  height: 500px;
+  width: 440px;
+  height: 440px;
   margin: auto;
   border-radius: 100%;
   position: relative;
   box-shadow: inset -1px 1px black;
+  position: relative;
+  top: 6rem;
 }
 
 .item {
