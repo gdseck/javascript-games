@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  div
+    h1 Sign in to our Passport app
+      div
+        form(action='/login', method='POST')
+          input(type='text' name='username' placeholder='username')
+          input(type='password' name='password' placeholder='password')
+          button(type='submit') Sign in
+      a(href='/signup') Create an account
+      #message
+      if message
+        h1 #{message}
