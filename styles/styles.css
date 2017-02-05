@@ -1,10 +1,22 @@
+@font-face {
+  font-family: 'Raleway';
+  src: url('webfont.eot'); /* IE9 Compat Modes */
+  src: url('webfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('webfont.woff2') format('woff2'), /* Super Modern Browsers */
+       url('webfont.woff') format('woff'), /* Pretty Modern Browsers */
+       url('webfont.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('webfont.svg#svgFontName') format('svg'); /* Legacy iOS */
+}
+
+
 * {
   box-sizing: border-box;
 }
 
 html {
   position: relative;
-  height: 100vh;
+  height: 100%;
+  width: 100%;
   background: url(img/background.jpg) no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -15,8 +27,80 @@ html {
 body {
   height: 100%;
   width: 100%;
+  padding-top: 7rem;
   margin: 0;
+  font-family: 'Raleway', Fallback, sans-serif;
   /*background: #1c1e20;*/
+}
+
+.page {
+  position: relative;
+  min-width: 80vw;
+  min-height: 492px;
+  margin: 0 2rem;
+  margin-bottom: 1rem;
+  padding: 2rem;
+  border: 1px solid white;
+  box-shadow: 1px 1px 1px rgba(146, 138, 138, 0.8);
+  background-color: rgba(250, 250, 251, 0.71);
+}
+
+.app-container {
+  height: 100%;
+  overflow: auto;
+}
+
+::-webkit-scrollbar {
+   width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+}
+
+h1 {
+  color: #3c3838;
+  font-family: 'Raleway',sans-serif;
+  font-size: 38px;
+  font-weight: 800;
+  line-height: 70px;
+  margin: 0 0 24px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.content-wrapper {
+  min-height: 300px;
+  padding: 2rem;
+}
+
+.list-panel {
+  list-style: none;
+  height: 200px;
+  width: 150px;
+  background-color: antiquewhite;
+  box-shadow: 1px 1px 1px rgba(0,0,0,0.8);
+  padding: 8px;
+  text-align: center;
+  position: relative;
+}
+
+.panel-link {
+  width: 100%;
+  height: 100px;
+  position: relative;
+  text-decoration: none;
+  color: black;
+  top: 38%;
+  transform: translateY(50%);
+  font-size: 34px;
+  line-height: 24px;
 }
 
 .navbar-wrapper {
@@ -26,6 +110,7 @@ body {
   /*background: linear-gradient(#000, #272525);*/
   background: linear-gradient(to bottom, #2b2b29 0%, #3d3e3c 100%);
   border-bottom: 2px solid #676565;
+  top: 0;
 }
 
 .nav-content {

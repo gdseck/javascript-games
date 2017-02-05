@@ -1,11 +1,11 @@
 extends layout
 
 block content
-  div
+  div(class='page')
     #user
-      h1 Welcome to javascript games
-        div
-          ul
-            li
-              a(href='/simon-says') Simon says
-        a(href='/signout') Sign out
+      h1 Pick a game and start playing
+      div(class='content-wrapper')
+        ul
+          li(class='list-panel')
+            a(class='panel-link' href='/simon-says') Simon says
+      a(href='/signout') Sign out
