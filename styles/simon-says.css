@@ -88,3 +88,7 @@
   white-space: nowrap;
   position: relative;
 }
+
+.start:focus {
+  outline: none;
+}
