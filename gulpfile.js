@@ -1,5 +1,4 @@
-"use strict"
-
+'use strict'
 var babelify = require('babelify')
 var browserify = require('browserify')
 var buffer = require('vinyl-buffer')
@@ -10,10 +9,11 @@ var merge = require('merge')
 var rename = require('gulp-rename')
 var source = require('vinyl-source-stream')
 var watchify = require('watchify')
+var watch = require('gulp-watch')
 
 var config = {
   js: {
-    src: './index.js',
+    src: './js/index.js',
     outputDir: './build/',
     mapDir: './maps/',
     outputFile: 'bundle.js'
@@ -26,14 +26,20 @@ function bundle (bundler) {
     .pipe(source(config.js.src))
     .pipe(buffer())
     .pipe(rename(config.js.outputFile))
-
     .pipe(gulp.dest(config.js.outputDir))
     .pipe(livereload())
 }
 
 gulp.task('bundle', function () {
-  var bundler = browserify(config.js.src)
-    .transform(babelify, {presets: ['es2015']})
+  var bundler = browserify(config.js.src).transform(babelify, {
+    presets: [ 'es2015' ]
+  })
 
   bundle(bundler)
+})
+
+gulp.task('watch', function () {
+  watch('js/**/*.js', function () {
+    gulp.start('bundle')
+  })
 })

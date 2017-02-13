@@ -22,6 +22,7 @@ app.use(cookieParser())
 
 app.use('/styles', express.static('styles'))
 app.use('/js', express.static('js'))
+app.use('/js', express.static('build'))
 
 const passport = require('passport')
 var session = require('express-session')
