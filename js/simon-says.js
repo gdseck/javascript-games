@@ -18,8 +18,9 @@ $(document).ready(function () {
 
   let intervalID = null
   let currentColorIndex = 0
-  const sequence = [ GREEN, GREEN ]
-  const userSequence = []
+  let userButtonsPressed = 0
+  let sequence = [ GREEN, GREEN ]
+  let userSequence = []
 
   let flicker = function () {
     $(sequence[currentColorIndex]).addClass('highlighted')
@@ -48,13 +49,30 @@ $(document).ready(function () {
       function () {
         $(color).removeClass('highlighted')
         userSequence.push(color)
-        if (sequence[0] === userSequence[0]) {
-          console.log('you are right!!!')
+        let error = false
+        for (let i = 0; i <= userButtonsPressed; i++) {
+          if (userSequence[i] !== sequence[i]) {
+            error = true
+            break
+          }
+        }
+        if (!error) {
+          if (userSequence.length === sequence.length) {
+            console.log('all correct')
+            userButtonsPressed = 0
+            endTurn()
+            return
+          }
+          userButtonsPressed++
           return
         }
-        console.log('dude, its like the first round')
+
+        console.log('loser')
+        userButtonsPressed = 0
+        sequence = []
+        userSequence = []
       },
-      500
+      200
     )
   }
 
@@ -78,6 +96,17 @@ $(document).ready(function () {
       $('.yellow').on('click', () => {
         pressButton(YELLOW)
       })
+    }
+
+    if (turn === COMPUTER) {
+      $('#start').on('click', function () {
+        intervalID = setInterval(() => flicker(), 1000)
+      })
+
+      $('.green').off('click')
+      $('.red').off('click')
+      $('.blue').off('click')
+      $('.yellow').off('click')
     }
   }
 })
