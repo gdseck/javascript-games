@@ -16,13 +16,19 @@ $(document).ready(function () {
   const YELLOW = '.yellow'
   const RED = '.red'
 
+  const colors = [ GREEN, RED, BLUE, YELLOW ]
+
   let intervalID = null
   let currentColorIndex = 0
   let userButtonsPressed = 0
-  let sequence = [ GREEN, GREEN ]
+  let sequence = []
   let userSequence = []
+  let round = 1
 
   let flicker = function () {
+    if (sequence.length <= round) {
+      sequence.push(colors[Math.ceil(Math.random() * 4)])
+    }
     $(sequence[currentColorIndex]).addClass('highlighted')
     setTimeout(
       function () {
@@ -61,6 +67,11 @@ $(document).ready(function () {
             console.log('all correct')
             userButtonsPressed = 0
             endTurn()
+            setTimeout(
+              () => setInterval(flicker, 1000),
+              500
+            )
+            round++
             return
           }
           userButtonsPressed++
@@ -69,7 +80,6 @@ $(document).ready(function () {
 
         console.log('loser')
         userButtonsPressed = 0
-        sequence = []
         userSequence = []
       },
       200
