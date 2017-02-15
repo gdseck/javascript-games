@@ -1,7 +1,7 @@
 'use strict'
 var $ = require('jquery')
 var jQuery = require('jquery')
-var Promise = require('promise')
+var Promise = require('bluebird')
 
 window.$ = $
 window.jQuery = jQuery
@@ -20,133 +20,109 @@ $(document).ready(function () {
 
   const colors = [ GREEN, RED, BLUE, YELLOW ]
 
-  let intervalID = null
   let currentColorIndex = 0
-  let userButtonsPressed = 0
   let sequence = []
   let userSequence = []
+  let playerPressCount = 0
   let round = 1
-
-  let computerTurn = function () {
-    if (sequence.length < round) {
-      new Promise(resolve => {
-        console.log('inside resolve')
-        let rand = Math.ceil(Math.random() * 4)
-        console.log(rand)
-        resolve(sequence.push(colors[Math.ceil(Math.random() * 4)]))
-      }).then(() => {
-        highlightBtn()
-      })
-    }
-  }
-
-  const flicker = () => {
-    return new Promise(resolve => {
-      $(sequence[currentColorIndex]).addClass('highlighted')
-      setTimeout(
-        () => $(sequence[currentColorIndex]).removeClass('highlighted'),
-        300
-      )
-    })
-  }
-
-  const checkStatus = () => {
-    return new Promise(resolve => {
-      if (currentColorIndex < sequence.length - 1) {
-        currentColorIndex++
-        return true
-      }
-
-      if (currentColorIndex === sequence.length - 1) {
-        console.log('computer turn end')
-        currentColorIndex = 0
-        endTurn()
-
-        return false
-      }
-    })
-  }
-
-  const highlightBtn = () => {
-    new Promise(flicker).then(() => checkStatus())
-  }
 
   $('#start').on('click', function () {
     computerTurn()
   })
 
+  const computerTurn = function () {
+    let rand = Math.ceil(Math.random() * 4) - 1
+    sequence.push(colors[rand])
+    highlightBtn()
+  }
+
+  const highlightBtn = () => {
+    flash().then(() => {
+      checkStatus()
+    })
+  }
+
+  const flash = () => new Promise(function (resolve) {
+    $(sequence[currentColorIndex]).addClass('highlighted')
+    setTimeout(
+      function () {
+        resolve($(sequence[currentColorIndex]).removeClass('highlighted'))
+      },
+      300
+    )
+  })
+
+  const checkStatus = () => {
+    if (round === currentColorIndex + 1) {
+      currentColorIndex = 0
+      endTurn()
+
+      return
+    }
+
+    currentColorIndex++
+    highlightBtn()
+  }
+
   const startComputerTurn = () => {
     setTimeout(computerTurn, 1000)
   }
 
-  const resetUserRound = () => {
-    userButtonsPressed = 0
-    userSequence = []
-  }
-
-  const pressButton = color => {
+  const btnPress = color => {
     $(color).addClass('highlighted')
     setTimeout(
-      function () {
+      () => {
         $(color).removeClass('highlighted')
-        userSequence.push(color)
-        console.log(userSequence)
-        let error = false
-        for (let i = 0; i <= userButtonsPressed; i++) {
-          if (userSequence[i] !== sequence[i]) {
-            error = true
-            break
-          }
-        }
-        if (error) {
-          console.log('loser')
-        }
-
-        if (!error && userSequence.length === sequence.length) {
-          console.log('all correct')
-          resetUserRound()
-          endTurn()
-          round++
-          startComputerTurn()
-          return
-        }
-
-        userButtonsPressed++
       },
       200
     )
   }
 
+  const checkPlayerStatus = color => {
+    userSequence.push(color)
+    playerPressCount++
+
+    if (userSequence[playerPressCount - 1] !== sequence[playerPressCount - 1]) {
+      console.log('LOSER')
+      return
+    }
+
+    if (userSequence.length === sequence.length) {
+      playerPressCount = 0
+      userSequence = []
+      round++
+      endTurn()
+      startComputerTurn()
+      return
+    }
+  }
+
+  const pressButton = color => {
+    new Promise(
+      resolve => resolve(btnPress(color))
+    ).then(() => checkPlayerStatus(color))
+  }
+
   const endTurn = () => {
     turn = turn === PLAYER ? COMPUTER : PLAYER
-    console.log('turn ended: new turn = ', turn)
 
     if (turn === PLAYER) {
-      console.log('inside player')
       $('#start').off('click')
-      $('.green').on('click', () => {
-        pressButton(GREEN)
-      })
-
-      $('.red').on('click', () => {
-        pressButton(RED)
-      })
-
-      $('.blue').on('click', () => {
-        pressButton(BLUE)
-      })
-
-      $('.yellow').on('click', () => {
-        pressButton(YELLOW)
-      })
+      colors.forEach(color => addClickHandler(color))
     }
 
     if (turn === COMPUTER) {
-      console.log('go computer')
-      $('.green').off('click')
-      $('.red').off('click')
-      $('.blue').off('click')
-      $('.yellow').off('click')
+      colors.forEach(color => removeClickHandler(color))
     }
+  }
+
+  const addClickHandler = (color) => {
+    $(color).on('click', () => {
+      pressButton(color)
+    })
+  }
+
+  const removeClickHandler = color => {
+    $(color).off('click')
   }
 })
