@@ -1,9 +1,11 @@
 'use strict'
 var $ = require('jquery')
 var jQuery = require('jquery')
+var Promise = require('promise')
 
 window.$ = $
 window.jQuery = jQuery
+window.Promise = Promise
 
 $(document).ready(function () {
   const PLAYER = 'player'
@@ -25,29 +27,62 @@ $(document).ready(function () {
   let userSequence = []
   let round = 1
 
-  let flicker = function () {
-    if (sequence.length <= round) {
-      sequence.push(colors[Math.ceil(Math.random() * 4)])
+  let computerTurn = function () {
+    if (sequence.length < round) {
+      new Promise(resolve => {
+        console.log('inside resolve')
+        let rand = Math.ceil(Math.random() * 4)
+        console.log(rand)
+        resolve(sequence.push(colors[Math.ceil(Math.random() * 4)]))
+      }).then(() => {
+        highlightBtn()
+      })
     }
-    $(sequence[currentColorIndex]).addClass('highlighted')
-    setTimeout(
-      function () {
-        $(sequence[currentColorIndex]).removeClass('highlighted')
-        if (currentColorIndex === sequence.length - 1) {
-          currentColorIndex = 0
-          clearInterval(intervalID)
-          endTurn()
-          return
-        }
+  }
+
+  const flicker = () => {
+    return new Promise(resolve => {
+      $(sequence[currentColorIndex]).addClass('highlighted')
+      setTimeout(
+        () => $(sequence[currentColorIndex]).removeClass('highlighted'),
+        300
+      )
+    })
+  }
+
+  const checkStatus = () => {
+    return new Promise(resolve => {
+      if (currentColorIndex < sequence.length - 1) {
         currentColorIndex++
-      },
-      500
-    )
+        return true
+      }
+
+      if (currentColorIndex === sequence.length - 1) {
+        console.log('computer turn end')
+        currentColorIndex = 0
+        endTurn()
+
+        return false
+      }
+    })
+  }
+
+  const highlightBtn = () => {
+    new Promise(flicker).then(() => checkStatus())
   }
 
   $('#start').on('click', function () {
-    intervalID = setInterval(() => flicker(), 1000)
+    computerTurn()
   })
+
+  const startComputerTurn = () => {
+    setTimeout(computerTurn, 1000)
+  }
+
+  const resetUserRound = () => {
+    userButtonsPressed = 0
+    userSequence = []
+  }
 
   const pressButton = color => {
     $(color).addClass('highlighted')
@@ -55,6 +90,7 @@ $(document).ready(function () {
       function () {
         $(color).removeClass('highlighted')
         userSequence.push(color)
+        console.log(userSequence)
         let error = false
         for (let i = 0; i <= userButtonsPressed; i++) {
           if (userSequence[i] !== sequence[i]) {
@@ -62,25 +98,20 @@ $(document).ready(function () {
             break
           }
         }
-        if (!error) {
-          if (userSequence.length === sequence.length) {
-            console.log('all correct')
-            userButtonsPressed = 0
-            endTurn()
-            setTimeout(
-              () => setInterval(flicker, 1000),
-              500
-            )
-            round++
-            return
-          }
-          userButtonsPressed++
+        if (error) {
+          console.log('loser')
+        }
+
+        if (!error && userSequence.length === sequence.length) {
+          console.log('all correct')
+          resetUserRound()
+          endTurn()
+          round++
+          startComputerTurn()
           return
         }
 
-        console.log('loser')
-        userButtonsPressed = 0
-        userSequence = []
+        userButtonsPressed++
       },
       200
     )
@@ -88,8 +119,10 @@ $(document).ready(function () {
 
   const endTurn = () => {
     turn = turn === PLAYER ? COMPUTER : PLAYER
+    console.log('turn ended: new turn = ', turn)
 
     if (turn === PLAYER) {
+      console.log('inside player')
       $('#start').off('click')
       $('.green').on('click', () => {
         pressButton(GREEN)
@@ -109,10 +142,7 @@ $(document).ready(function () {
     }
 
     if (turn === COMPUTER) {
-      $('#start').on('click', function () {
-        intervalID = setInterval(() => flicker(), 1000)
-      })
-
+      console.log('go computer')
       $('.green').off('click')
       $('.red').off('click')
       $('.blue').off('click')
