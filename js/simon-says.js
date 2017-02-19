@@ -30,6 +30,7 @@ $(document).ready(function () {
     computerTurn()
   })
 
+  // COMPUTER
   const computerTurn = function () {
     let rand = Math.ceil(Math.random() * 4) - 1
     sequence.push(colors[rand])
@@ -61,11 +62,18 @@ $(document).ready(function () {
     }
 
     currentColorIndex++
-    highlightBtn()
+    setTimeout(highlightBtn, 300)
   }
 
   const startComputerTurn = () => {
     setTimeout(computerTurn, 1000)
+  }
+
+  // PLAYER
+  const playerBtnPress = color => {
+    new Promise(
+      resolve => resolve(btnPress(color))
+    ).then(() => checkPlayerStatus(color))
   }
 
   const btnPress = color => {
@@ -87,6 +95,7 @@ $(document).ready(function () {
       return
     }
 
+    console.log(userSequence.length, sequence.length)
     if (userSequence.length === sequence.length) {
       playerPressCount = 0
       userSequence = []
@@ -95,12 +104,6 @@ $(document).ready(function () {
       startComputerTurn()
       return
     }
-  }
-
-  const pressButton = color => {
-    new Promise(
-      resolve => resolve(btnPress(color))
-    ).then(() => checkPlayerStatus(color))
   }
 
   const endTurn = () => {
@@ -118,7 +121,7 @@ $(document).ready(function () {
 
   const addClickHandler = (color) => {
     $(color).on('click', () => {
-      pressButton(color)
+      playerBtnPress(color)
     })
   }
 
