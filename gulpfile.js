@@ -38,6 +38,11 @@ gulp.task('bundle', function () {
   bundle(bundler)
 })
 
+gulp.task('fonts', function () {
+  gulp.src('node_modules/font-awesome/fonts/*')
+    .pipe(gulp.dest('public/fonts'))
+})
+
 gulp.task('watch', function () {
   watch('js/**/*.js', function () {
     gulp.start('bundle')
