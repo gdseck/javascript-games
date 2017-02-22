@@ -6,12 +6,17 @@ html
     link(rel='stylesheet', href='/styles/simon-says.css')
   body
     div(class='navbar-wrapper')
+      div(class='nav-header')
+        div(class='header-content') Javascript games
+          div(class='burger-menu') X
       div(class='nav-content')
         div(class='nav-item-wrapper')
-        div(class='nav-item-wrapper brand-wrapper')
-          div(class='brand') javascript games
+          a(class='nav-item', href='/simon-says') Simon Says
         div(class='nav-item-wrapper')
-          input(class='searchField', placeholder='find games...')
+      div(class='nav-settings')
     div(class='app-container')
       block content
     script(type='text/javascript' src='js/bundle.js')
+
+//div(class='nav-item-wrapper')
+//  input(class='searchField', placeholder='find games...')

@@ -105,40 +105,74 @@ h1 {
 }
 
 .navbar-wrapper {
-  height: 4rem;
+  height: 100%;
   position: fixed;
-  width: 100%;
-  /*background: linear-gradient(#000, #272525);*/
-  background: linear-gradient(to bottom, #2b2b29 0%, #3d3e3c 100%);
+  width: 14rem;
+  z-index: 30;
+  background: linear-gradient(to bottom, #000000 0%, #2d3128 100%);
   border-bottom: 2px solid #676565;
+  border-right: 1px solid;
+  box-shadow: 1px 1px 1px rgba(0,0,0,0.8);
   top: 0;
 }
 
-.nav-content {
-  height: 100%;
+.nav-header {
+  height: 3rem;
   display: flex;
-  flex-flow: row nowrap;
-  margin: 0 3rem;
-  justify-content: space-between;
+  flex-flow: column nowrap;
+  justify-content: center;
+  border-bottom: 1px inset #fff;
+}
+
+.header-content {
+  align-self: center;
+  color: #fff;
+}
+
+.nav-content {
+  height: 50%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
 }
 
 .nav-item-wrapper {
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
-  align-items: center;
-  width: 20rem;
-  height: 100%;
+  align-items: flex-start;
+  width: 100%;
+  min-height: 2rem;
+  padding: 1rem;
 }
 
-.brand {
+.nav-item {
+  align-items: flex-start;
+  color: #fff;
+  text-decoration: none;
+}
+
+.burger-menu {
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  position: relative;
+  border: 1px solid #fff;
+  background: gray;
+  border-radius: 100%;
+  text-align: center;
+  padding-top: 3px;
+  margin-left: 10px;
+}
+
+/*.brand {
   color: #fff;
   font-weight: 600;
   font-variant: small-caps;
   font-size: 24px;
-}
+}*/
 
-.brand-wrapper {
+/*.brand-wrapper {
   border-bottom: 1px solid black;
   height: 150%;
   background: linear-gradient(to bottom, #2b2b29 0%, #3d3e3c 100%);
@@ -148,7 +182,7 @@ h1 {
   border-bottom-width: 5px;
   border-left: 2px solid #676565;
   border-right: 2px solid #676565;
-}
+}*/
 
 .searchField {
   align-self: flex-end;
